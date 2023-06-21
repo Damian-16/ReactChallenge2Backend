@@ -1,13 +1,14 @@
 import { Controller, Get, Query } from '@nestjs/common';
+import { SearchService } from './search.service';
 
 @Controller('search')
 export class SearchController {
-  @Get()
-  search(@Query('term') searchTerm: string): any {
-    // Filtra los objetos de búsqueda basados en el título
-    const results = searchObjectsByTitle(searchTerm);
+  constructor(private readonly searchService: SearchService) {}
 
-    // Retorna los resultados
+  @Get()
+  search(@Query('title') searchTerm: string): any {
+    const results = this.searchService.searchObjectsByTitle(searchTerm);
+
     return results;
   }
 }
